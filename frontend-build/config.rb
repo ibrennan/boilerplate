@@ -1,5 +1,5 @@
 http_path = "../"
-css_dir = "../cloud-code/public/_includes/css"
+css_dir = "../parse/public/_includes/css"
 sass_dir = "sassian"
 images_dir = "images"
 http_images_path = "../images"

@@ -1,5 +1,7 @@
 module.exports = function (grunt) {
 
+	var buildPath = "parse";
+
 	grunt.initConfig({ 
 
 		// Declare our package dependencies
@@ -16,7 +18,7 @@ module.exports = function (grunt) {
 			}
 		},
 		// clean files to production directory
-		clean: ["cloud-code/public/_includes/js","cloud-code/public/_includes/images"],
+		clean: [buildPath + "/public/_includes/js",buildPath + "/public/_includes/images","index.html"],
 
 		// Copy files to production directory
 		copy: {
@@ -28,7 +30,7 @@ module.exports = function (grunt) {
 						expand: true,
 						cwd: 'frontend-build/',
 						src: ['images/**', '!images/_icons/**', '!images/_icons2x/**'],
-						dest: 'cloud-code/public/_includes/',
+						dest: buildPath + '/public/_includes/',
 						filter: 'isFile'
 					},
 					{
@@ -37,7 +39,7 @@ module.exports = function (grunt) {
 						expand: true,
 						cwd: 'frontend-build/',
 						src: ['js/**'],
-						dest: 'cloud-code/public/_includes/',
+						dest: buildPath + '/public/_includes/',
 						filter: 'isFile'
 					},
 					{
@@ -45,7 +47,7 @@ module.exports = function (grunt) {
 						expand: true,
 						cwd: 'frontend-build/',
 						src: ['fonts/**'],
-						dest: 'cloud-code/public/_includes/',
+						dest: buildPath + '/public/_includes/',
 						filter: 'isFile'
 					},
 					{
@@ -53,7 +55,7 @@ module.exports = function (grunt) {
 						expand: true,
 						cwd: 'frontend-build/',
 						src: ['sounds/**'],
-						dest: 'cloud-code/public/_includes/',
+						dest: buildPath + '/public/_includes/',
 						filter: 'isFile'
 					},
 					{
@@ -61,7 +63,18 @@ module.exports = function (grunt) {
 						expand: true,
 						cwd: 'frontend-build/',
 						src: ['videos/**'],
-						dest: 'cloud-code/public/_includes/',
+						dest: buildPath + '/public/_includes/',
+						filter: 'isFile'
+					}
+				]
+			},
+			install: {
+				files: [
+					{
+						expand: true,
+						cwd: '',
+						src: ['index.html'],
+						dest: buildPath + '/public/',
 						filter: 'isFile'
 					}
 				]
@@ -107,6 +120,12 @@ module.exports = function (grunt) {
 					title: 'Deployment to Parse complete',  // optional
 					message: 'All files have compiled and been deployed to Parse', //required
 				}
+			},
+			install: {
+				options: {
+					title: 'First installation complete',  // optional
+					message: 'Ready to rock', //required
+				}
 			}
 		},
 
@@ -115,12 +134,6 @@ module.exports = function (grunt) {
 				command: [
 					'cd cloud-code',
 					'parse deploy'
-				].join('&&')
-			},
-			install: {
-				command: [
-					'parse new cloud-code',
-					'mv index.html cloud-code/public/index.html'
 				].join('&&')
 			}
 		}
@@ -142,10 +155,10 @@ module.exports = function (grunt) {
 
 	// Our default task, eventually this will have tasks for different
 	// enviroment release builds.
-	grunt.registerTask('default', ['clean', 'compass', 'copy', 'notify:watch']);
+	grunt.registerTask('default', ['clean', 'compass', 'copy:main', 'notify:watch']);
 
-	grunt.registerTask('deploy', ['clean', 'compass', 'copy', 'shell:deploy', 'notify:deploy']);
+	grunt.registerTask('deploy', ['clean', 'compass', 'copy:main', 'shell:deploy', 'notify:deploy']);
 
-	grunt.registerTask('install', ['shell:install']);
+	grunt.registerTask('install', ['copy:install', 'clean', 'compass', 'copy:main', 'notify:install']);
 
 };
