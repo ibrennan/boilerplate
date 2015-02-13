@@ -132,7 +132,7 @@ module.exports = function (grunt) {
 		shell: {
 			deploy: {
 				command: [
-					'cd cloud-code',
+					'cd ' + buildPath,
 					'parse deploy'
 				].join('&&')
 			}
