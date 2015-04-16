@@ -1,12 +1,12 @@
 {
-	"name": "tech-cards",
+	"name": "Boilerplate - Parse, Backbone, Sass",
 	"author": {
-		"name": "AnalogFolk",
-		"email": "ian.brennan@analogfolk.com"
+		"name": "Ian Brennan",
+		"email": "ian@ibrennan.co.uk"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@bitbucket.org:analogfolk-ondemand/tech-cards.git"
+		"url": ""
 	},
 	"devDependencies": {
 		"grunt": "~0.4.2",
